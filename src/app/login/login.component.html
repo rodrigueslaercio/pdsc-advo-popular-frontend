@@ -1,0 +1,27 @@
+<mat-card class="login-card">
+  <form #formLogin="ngForm" novalidate>
+    <div class="row justify-content-center">
+      <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12">
+        <div class="logo text-center">ADVOGADO POPULAR</div>
+
+        <div class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Digite seu email" name="email" [(ngModel)]="autenticacao.email" required>
+          </mat-form-field>
+        </div>
+
+        <div class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" placeholder="Digite sua senha" name="senha" [(ngModel)]="autenticacao.senha" required>
+          </mat-form-field>
+        </div>
+
+        <div class="form-button">
+          <button mat-raised-button color="primary" type="submit" (click)="login()">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card>
