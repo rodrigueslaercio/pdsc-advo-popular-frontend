@@ -12,4 +12,8 @@ export class UsuarioService {
     public obterUsuario(id: Number): Observable<Usuario> {
         return this.serviceGenerico.get(`${environment.API}/usuario`, `${id}`);
     }
+
+    public cadastrarUsuario(usuario: Usuario): Observable<Usuario> {
+        return this.serviceGenerico.post(usuario, `${environment.API}/usuario`, `cadastrar`);
+    }
 }
