@@ -1,4 +1,4 @@
-.login-card {
+.cadastro-usuario-card{
   max-width: 500px;
   margin: 40px auto;
   padding: 30px;
@@ -24,16 +24,3 @@
     width: 100%;
   }
 }
-
-a {
-  color: #0066cc;
-  text-decoration: underline; 
-  cursor: pointer; 
-  transition: color 0.2s; 
-}
-
-a:hover {
-  color: #004499; 
-  text-decoration: none; 
-}
-

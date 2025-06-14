@@ -12,6 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { JWTService } from "../shared/auth/jwt.service";
 import { Usuario } from "../shared/usuarios/usuario.model";
 import { UsuarioService } from "../shared/usuarios/usuario.service";
+import { Router, RouterModule } from "@angular/router";
 
 @Component({
     selector: 'login',
@@ -23,14 +24,18 @@ import { UsuarioService } from "../shared/usuarios/usuario.service";
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        MatCardModule
+        MatCardModule,
+        RouterModule
     ],
     providers: [AutenticacaoService]
 })
 export class LoginComponent implements OnInit {
     autenticacao: Autenticacao;
 
-    constructor(private authService: AutenticacaoService, private jwtService: JWTService, private usuarioService: UsuarioService) {
+    constructor(private authService: AutenticacaoService, 
+        private jwtService: JWTService,
+         private usuarioService: UsuarioService, 
+        private route: Router) {
         this.autenticacao = new Autenticacao();
     }
 
@@ -42,7 +47,7 @@ export class LoginComponent implements OnInit {
                 const jwtHelper: JwtHelperService = new JwtHelperService();
                 this.jwtService.setToken(token);
                 const usuario: Usuario | null = jwtHelper.decodeToken(token);
-                if (usuario) {
+                if (usuario && usuario.id !== undefined) {
                     this.usuarioService.obterUsuario(usuario.id).subscribe(usuarioLogado => {
                         console.log(usuarioLogado);
                     });
@@ -53,6 +58,10 @@ export class LoginComponent implements OnInit {
         })
     }
 
-    ngOnInit(): void {}
-    
+    redirecionarPaginaCadastro() {
+        this.route.navigate(["/cadastro"]);
+    }
+
+    ngOnInit(): void { }
+
 }
