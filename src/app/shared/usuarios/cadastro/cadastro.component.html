@@ -4,10 +4,39 @@
       <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12">
         <div class="logo text-center">Cadastre-se</div>
 
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Tipo de Cadastro</mat-label>
+      <mat-select [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" required>
+        <mat-option value="cliente">Cliente</mat-option>
+        <mat-option value="advogado">Advogado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Nome</mat-label>
             <input matInput placeholder="Digite seu nome" name="nome" [(ngModel)]="usuario.nome" required>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="usuario.tipoCadastro == 'cliente'" class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>CPF/CNPJ</mat-label>
+            <input matInput placeholder="Digite seu CPF ou CNPJ" name="cpf_cnpj" [(ngModel)]="usuario.cpf_cnpj" required>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>OAB</mat-label>
+            <input matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" required>
+          </mat-form-field>
+        </div>
+
+         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Estado Conselho</mat-label>
+            <input matInput placeholder="Digite o Estado do conselho" name="estado" [(ngModel)]="usuario.estado" required>
           </mat-form-field>
         </div>
 

@@ -8,6 +8,7 @@ import { MatInputModule } from "@angular/material/input";
 import { Usuario } from "../usuario.model";
 import { UsuarioService } from "../usuario.service";
 import { Router } from "@angular/router";
+import { MatSelectModule } from "@angular/material/select";
 
 @Component({
     selector: 'cadastro',
@@ -19,7 +20,8 @@ import { Router } from "@angular/router";
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        MatCardModule
+        MatCardModule,
+        MatSelectModule,
     ]
 })
 export class CadastroComponent implements OnInit {
@@ -27,6 +29,7 @@ export class CadastroComponent implements OnInit {
 
     constructor(private usuarioService: UsuarioService, private route: Router) {
         this.usuario = new Usuario();
+        this.usuario.tipoCadastro = 'cliente';
     }
 
     cadastrar() {
