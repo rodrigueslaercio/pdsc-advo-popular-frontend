@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AutenticacaoService } from './shared/auth/autenticacao.service';
 import { JWTService } from './shared/auth/jwt.service';
 import { UsuarioService } from './shared/usuarios/usuario.service';
+import { ServiceGenerico } from './service.generico';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,5 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(), 
     AutenticacaoService,
     JWTService,
-    UsuarioService]
+    UsuarioService,
+    ServiceGenerico
+  ]
 };
