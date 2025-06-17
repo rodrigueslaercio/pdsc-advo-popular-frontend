@@ -18,6 +18,6 @@ export const appConfig: ApplicationConfig = {
     JWTService,
     UsuarioService,
     ServiceGenerico,
-    AuthGuard
+    AuthGuard,
   ]
 };

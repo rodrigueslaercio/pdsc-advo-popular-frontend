@@ -1,0 +1,17 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar {
+  margin-bottom: 16px;
+}
+
+a {
+  cursor: pointer; 
+  transition: color 0.2s; 
+}
+
+a:hover {
+  color: #888d92; 
+  text-decoration: none; 
+}

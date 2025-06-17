@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ServiceGenerico } from "../../service.generico";
 import { environment } from "../../environments/environments";
 import { Usuario } from "../usuarios/usuario.model";
+import { routes } from "../../app.routes";
+import { Route, Router } from "@angular/router";
 
 @Injectable()
 export class AutenticacaoService {
@@ -13,7 +15,7 @@ export class AutenticacaoService {
     usuario: Usuario | null = null;
     usuarioEvent = new EventEmitter<boolean>();
 
-    constructor(private serviceGenerico: ServiceGenerico) {}
+    constructor(private serviceGenerico: ServiceGenerico, private route : Router) {}
 
     login(autenticacao: Autenticacao): Observable<AuthResponse> {
         return this.serviceGenerico.post(autenticacao, `${environment.API}`, 'login');
@@ -39,4 +41,10 @@ export class AutenticacaoService {
         this.usuario = usuario;
         this.usuarioEvent.emit(true);
     } 
+
+    logout() {
+        localStorage.removeItem('usuarioLogado');
+        this.usuario = null;
+        this.route.navigate(['/login']);
+    }
 }
