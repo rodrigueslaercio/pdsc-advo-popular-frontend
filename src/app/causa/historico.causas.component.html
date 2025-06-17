@@ -1,0 +1,28 @@
+<mat-card class="historico-causas-card">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="titulo">
+      <th mat-header-cell *matHeaderCellDef> Título </th>
+      <td mat-cell *matCellDef="let causa"> {{ causa.titulo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef> Descrição </th>
+      <td mat-cell *matCellDef="let causa"> {{ causa.descricao }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="statusCausa">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let causa"> {{ causa.statusCausa }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tipoCausa">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let causa"> {{ causa.tipoCausa }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>

@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
                 const usuario: Usuario | null = jwtHelper.decodeToken(token);
                 if (usuario && usuario.id !== undefined) {
                     this.usuarioService.obterUsuario(usuario.id).subscribe(usuarioLogado => {
-                        console.log(usuarioLogado);
+                        this.authService.registrarUsuario(usuarioLogado);
+                        this.route.navigate(['/home-cliente']);
                     });
                 } else {
                     console.error('Ocorreu um erro ao logar.');

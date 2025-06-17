@@ -7,6 +7,7 @@ import { AutenticacaoService } from './shared/auth/autenticacao.service';
 import { JWTService } from './shared/auth/jwt.service';
 import { UsuarioService } from './shared/usuarios/usuario.service';
 import { ServiceGenerico } from './service.generico';
+import { AuthGuard } from './shared/auth/auth.guard.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     AutenticacaoService,
     JWTService,
     UsuarioService,
-    ServiceGenerico
+    ServiceGenerico,
+    AuthGuard
   ]
 };
