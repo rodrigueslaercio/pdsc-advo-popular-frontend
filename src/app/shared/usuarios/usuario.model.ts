@@ -1,7 +1,7 @@
 export class Usuario {
     constructor() {}
 
-    id?: Number;
+    id?: number;
     nome?: string;
     cpf_cnpj?: string;
     oab?: string;
