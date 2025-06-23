@@ -1,0 +1,59 @@
+<mat-card class="cadastro-card">
+    <form #formLogin="ngForm" novalidate>
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12">
+                <div class="logo text-center">Registre sua causa</div>
+
+                <div class="form-field">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Título</mat-label>
+                        <input matInput placeholder="Digite o título" name="titulo" [(ngModel)]="causa.titulo" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-field">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Descrição</mat-label>
+                        <input matInput placeholder="Digite a descrição" name="descricao" [(ngModel)]="causa.descricao"
+                            required>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Tipo da causa</mat-label>
+                    <mat-select [(ngModel)]="causa.tipoCausa" name="tipoCadastro" required>
+                        <mat-option *ngFor="let tipo of tiposEnum" [value]="tipo">{{ tipo }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="form-field">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Número do processo</mat-label>
+                        <input matInput placeholder="Digite o número do processo" name="numeroProcesso"
+                            [(ngModel)]="causa.numeroProcesso" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-field">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Tribunal</mat-label>
+                        <input matInput placeholder="Digite o Tribunal" name="tribunal" [(ngModel)]="causa.tribunal"
+                            required>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-field">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Valor da causa</mat-label>
+                        <input matInput placeholder="Digite o valor da causa" name="valorCausa"
+                            [(ngModel)]="causa.valorCausa" required>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="form-button">
+                    <button mat-raised-button color="primary" type="submit" (click)="cadastrar()">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </form>

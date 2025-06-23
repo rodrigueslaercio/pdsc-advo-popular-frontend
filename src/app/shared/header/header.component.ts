@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { AutenticacaoService } from "../auth/autenticacao.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-header',
@@ -11,7 +12,7 @@ import { AutenticacaoService } from "../auth/autenticacao.service";
     ]
 })
 export class HeaderComponent implements OnInit {
-    constructor(private autenticacaoService: AutenticacaoService) {}
+    constructor(private autenticacaoService: AutenticacaoService, private route: Router) {}
     
     ngOnInit(): void {}
 
@@ -19,5 +20,8 @@ export class HeaderComponent implements OnInit {
         this.autenticacaoService.logout();
     }
 
+    registroCausaRedirect() {
+        this.route.navigate(['/cadastro-causa']);
+    }
 
 }
