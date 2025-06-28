@@ -16,4 +16,8 @@ export class UsuarioService {
     public cadastrarUsuario(usuario: Usuario): Observable<Usuario> {
         return this.serviceGenerico.post(usuario, `${environment.API}/usuario`, `cadastrar`);
     }
+
+    public buscarEstados(): Observable<any> {
+        return this.serviceGenerico.get('/usuario', 'api/estados');
+    }
 }
