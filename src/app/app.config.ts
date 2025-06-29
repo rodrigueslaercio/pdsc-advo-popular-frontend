@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     UsuarioService,
     ServiceGenerico,
     AuthGuard,
-    MatSnackBarModule
+    MatSnackBarModule,
   ]
 };

@@ -24,13 +24,30 @@
         </div>
 
         <div *ngIf="usuario.tipoCadastro == 'cliente'" class="form-field">
+          <mat-radio-group [(ngModel)]="tipoDocumento" (change)="onChangeTipoDocumento()" name="tipoDocumento">
+            <mat-radio-button value="cpf">CPF</mat-radio-button>
+            <mat-radio-button value="cnpj">CNPJ</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div *ngIf="tipoDocumento === 'cpf' && usuario.tipoCadastro == 'cliente'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
-            <mat-label>CPF/CNPJ</mat-label>
-            <input matInput placeholder="Digite seu CPF ou CNPJ" name="cpf_cnpj" [(ngModel)]="usuario.cpf_cnpj"
-              #cpf="ngModel" required pattern="^\d{11}|\d{14}$" maxlength="14">
+            <mat-label>CPF</mat-label>
+            <input matInput mask="000.000.000-00" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" required>
+             <mat-hint align="end">{{ usuario.cpf?.length || 0 }}/14</mat-hint>
             <mat-error *ngIf="cpf.invalid && cpf.touched">
-              <span *ngIf="cpf.errors?.['required']">CPF ou CNPJ é obrigatório</span>
-              <span *ngIf="cpf.errors?.['pattern']">Deve conter 11 (CPF) ou 14 (CNPJ) caracteres, apenas números.</span>
+              <span *ngIf="cpf.errors?.['required']">CPF é obrigatório</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+         <div *ngIf="tipoDocumento === 'cnpj' && usuario.tipoCadastro == 'cliente'" class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>CNPJ</mat-label>
+            <input matInput mask="00.000.000/0000-00" name="cnpj" [(ngModel)]="usuario.cnpj" #cnpj="ngModel" required>
+             <mat-hint align="end">{{ usuario.cnpj?.length || 0 }}/18</mat-hint>
+            <mat-error *ngIf="cnpj.invalid && cnpj.touched">
+              <span *ngIf="cnpj.errors?.['required']">CNPJ é obrigatório</span>
             </mat-error>
           </mat-form-field>
         </div>
@@ -61,7 +78,6 @@
             <mat-hint align="end">{{ usuario.email?.length || 0 }}/100</mat-hint>
             <mat-error *ngIf="email.invalid && email.touched">
               <span *ngIf="email.errors?.['required']">Email é obrigatório.</span>
-              <span *ngIf="email.errors?.['email']">Email deve ser válido</span>
             </mat-error>
           </mat-form-field>
         </div>

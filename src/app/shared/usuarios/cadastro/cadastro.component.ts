@@ -10,6 +10,8 @@ import { UsuarioService } from "../usuario.service";
 import { Router } from "@angular/router";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatRadioButton, MatRadioGroup } from "@angular/material/radio";
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
     selector: 'cadastro',
@@ -23,15 +25,23 @@ import { MatSnackBar } from "@angular/material/snack-bar";
         MatButtonModule,
         MatCardModule,
         MatSelectModule,
+        MatRadioGroup,
+        MatRadioButton,
+        NgxMaskDirective
+    ],
+    providers: [
+        provideNgxMask(),
     ]
 })
 export class CadastroComponent implements OnInit {
     usuario: Usuario;
     erroEndpoint: string | null = null;
+    tipoDocumento: string | null = null;
 
     constructor(private usuarioService: UsuarioService, private route: Router, private snackBar: MatSnackBar) {
         this.usuario = new Usuario();
         this.usuario.tipoCadastro = 'cliente';
+        this.tipoDocumento = 'cpf';
     }
 
 
@@ -58,6 +68,14 @@ export class CadastroComponent implements OnInit {
 
     verificaSenha(): boolean {
         return this.usuario.senha === this.usuario.confirmacaoSenha;
+    }
+
+    onChangeTipoDocumento() {
+        if (this.tipoDocumento === 'cpf') {
+            this.usuario.cnpj = '';
+        } else if (this.tipoDocumento === 'cnpj') {
+            this.usuario.cpf = '';
+        }
     }
 
 
