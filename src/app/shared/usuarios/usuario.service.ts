@@ -18,6 +18,6 @@ export class UsuarioService {
     }
 
     public buscarEstados(): Observable<any> {
-        return this.serviceGenerico.get('/usuario', 'api/estados');
+        return this.serviceGenerico.get('https://servicodados.ibge.gov.br/', 'api/v1/localidades/estados');
     }
 }

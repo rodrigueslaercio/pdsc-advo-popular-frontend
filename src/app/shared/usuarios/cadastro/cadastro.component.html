@@ -6,7 +6,7 @@
 
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Tipo de Cadastro</mat-label>
-          <mat-select [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" required>
+          <mat-select [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" (selectionChange)="onChangeTipoCadastro()" required>
             <mat-option value="cliente">Cliente</mat-option>
             <mat-option value="advogado">Advogado</mat-option>
           </mat-select>
@@ -52,10 +52,11 @@
           </mat-form-field>
         </div>
 
+
         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>OAB</mat-label>
-            <input matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" #oab="ngModel" required pattern="^\d{6,7}-[A-Z]{2}$" maxlength="10">
+            <input matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" #oab="ngModel" required (keypress)="onlyNumbers($event)" maxlength="6">
             <mat-error *ngIf="oab.invalid && oab.touched">
               <span *ngIf="oab.errors?.['pattern']">OAB deve ser válido</span>
             </mat-error>
@@ -63,12 +64,21 @@
         </div>
 
         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="usuario.estado" name="estado" required>
+            <mat-option *ngFor="let estado of estados" [value]="estado.nome"> {{estado.nome}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+
+        <!-- <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Estado Conselho</mat-label>
             <input matInput placeholder="Digite o Estado do conselho" name="estado" [(ngModel)]="usuario.estado"
               required>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">

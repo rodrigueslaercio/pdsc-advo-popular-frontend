@@ -1,20 +1,29 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
+  "version": "2.0.0",
+  "tasks": [
     {
-      "name": "ng serve",
-      "type": "firefox",
-      "request": "launch",
-      "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
+      "label": "npm: start",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "npm run start"],
+      "options": {
+        "env": {
+          "PATH": "/home/laercior/.nvm/versions/node/v22.0.0/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
     },
     {
-      "name": "ng test",
-      "type": "firefox",
-      "request": "launch",
-      "preLaunchTask": "npm: test",
-      "url": "http://localhost:9876/debug.html"
+      "label": "npm: test",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-c", "npm run test"],
+      "options": {
+        "env": {
+          "PATH": "/home/laercior/.nvm/versions/node/v22.0.0/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
     }
   ]
 }

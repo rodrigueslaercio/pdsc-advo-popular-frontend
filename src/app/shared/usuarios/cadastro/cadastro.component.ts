@@ -12,6 +12,10 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatRadioButton, MatRadioGroup } from "@angular/material/radio";
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { firstValueFrom, Observable } from "rxjs";
+import { JWTService } from "../../auth/jwt.service";
+import { AutenticacaoService } from "../../auth/autenticacao.service";
 
 @Component({
     selector: 'cadastro',
@@ -27,7 +31,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
         MatSelectModule,
         MatRadioGroup,
         MatRadioButton,
-        NgxMaskDirective
+        NgxMaskDirective,
     ],
     providers: [
         provideNgxMask(),
@@ -37,8 +41,10 @@ export class CadastroComponent implements OnInit {
     usuario: Usuario;
     erroEndpoint: string | null = null;
     tipoDocumento: string | null = null;
+    estados: any[] = [];
 
-    constructor(private usuarioService: UsuarioService, private route: Router, private snackBar: MatSnackBar) {
+    constructor(private usuarioService: UsuarioService, private route: Router, private snackBar: MatSnackBar, private authService: AutenticacaoService, 
+            private jwtService: JWTService) {
         this.usuario = new Usuario();
         this.usuario.tipoCadastro = 'cliente';
         this.tipoDocumento = 'cpf';
@@ -46,24 +52,30 @@ export class CadastroComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.usuarioService.buscarEstados().subscribe(res => {
+            this.estados = res;
+        });
     }
 
-    cadastrar() {
-        this.usuarioService.cadastrarUsuario(this.usuario).subscribe({
-            next: (res) => {
-                this.route.navigate(['/']);
-            },
-            error: (err) => {
-                this.erroEndpoint = err.error || 'Erro desconhecido ao cadastrar';
-                if (this.erroEndpoint !== null) {
-                    this.snackBar.open(this.erroEndpoint, 'Fechar', {
-                    duration: 5000,
-                    verticalPosition: 'bottom',
-                    horizontalPosition: 'center'
-                });
-                }
-            }
-        });
+    async cadastrar() {
+        try {
+            await firstValueFrom(this.usuarioService.cadastrarUsuario(this.usuario));
+
+            this.snackBar.open('Cadastrado com sucesso!', 'Fechar', {
+                duration: 5000,
+                verticalPosition: 'bottom',
+                horizontalPosition: 'center'
+            });
+
+            await this.authService.logarAposCadastro(this.usuario);
+        } catch (err: any) {
+            this.erroEndpoint = err.error || 'Erro desconhecido ao cadastrar';
+            this.snackBar.open(this.erroEndpoint!, 'Fechar', {
+                duration: 5000,
+                verticalPosition: 'bottom',
+                horizontalPosition: 'center'
+            });
+        }
     }
 
     verificaSenha(): boolean {
@@ -78,5 +90,35 @@ export class CadastroComponent implements OnInit {
         }
     }
 
+    getSiglaEstado(nome: string) {
+        const estado = this.estados.find(e => e.nome === nome)
+        return estado ? estado.sigla : '';
+    }
+
+    defineNumeroOab(): string {
+        if (this.usuario.oab !== undefined && this.usuario.oab.length !== 9) {
+            return this.usuario.oab += "/" + this.getSiglaEstado(this.usuario.estado!);
+        }
+        return this.usuario.oab!;
+    }
+
+    onlyNumbers(event: KeyboardEvent) {
+        const charCode = event.charCode || event.keyCode;
+        if (charCode < 48 || charCode > 57) {
+            event.preventDefault();
+        }
+    }
+
+    onChangeTipoCadastro() {
+        if (this.usuario.tipoCadastro === 'advogado') {
+            this.usuario.cpf = '';
+            this.usuario.cnpj = '';
+            this.tipoDocumento = null;
+        } else {
+            this.usuario.oab = '';
+            this.usuario.estado = '';
+        }
+    }
+    
 
 }
