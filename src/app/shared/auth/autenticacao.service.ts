@@ -20,7 +20,7 @@ export class AutenticacaoService {
     usuarioEvent = new EventEmitter<boolean>();
     autenticacaoCadastro: Autenticacao | null = null;
 
-    constructor(private serviceGenerico: ServiceGenerico, private snackBar: MatSnackBar, private route : Router, private jwtService: JWTService, private usuarioService: UsuarioService) {}
+    constructor(private serviceGenerico: ServiceGenerico, private snackBar: MatSnackBar, private http: HttpClient, private route : Router, private jwtService: JWTService, private usuarioService: UsuarioService) {}
 
     login(autenticacao: Autenticacao): Observable<AuthResponse> {
         return this.serviceGenerico.post(autenticacao, `${environment.API}`, 'login');
@@ -49,6 +49,7 @@ export class AutenticacaoService {
 
     logout() {
         localStorage.removeItem('usuarioLogado');
+        localStorage.removeItem('jwt_token');
         this.usuario = null;
         this.route.navigate(['/login']);
     }
@@ -107,5 +108,13 @@ export class AutenticacaoService {
                     horizontalPosition: 'center'
             });
         }
+    }
+
+    usuarioAcesso(path: string, id?: number): Observable<any> {
+         if (id !== undefined) {
+            return this.serviceGenerico.get(`${environment.API}`, `${path}/${id}/autorizado`);
+         }
+
+         return this.serviceGenerico.get(`${environment.API}`, `${path}/autorizado`);
     }
 }

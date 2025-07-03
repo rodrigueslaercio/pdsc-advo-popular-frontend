@@ -12,6 +12,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent, title: 'Advogado Popular' },
     { path: 'cadastro', component: CadastroComponent, title: 'Cadastre-se' },
     { path: 'causas/cadastrar', component: CadastroCausasComponent, title: 'Registre a causa' },
-    { path: 'causas/editar/:id', component: CadastroCausasComponent},
-    { path: 'causas/:id', component: CausaComponent },
+    { path: 'causas/editar/:id', component: CadastroCausasComponent, canActivate: [AuthGuard]},
+    { path: 'causa/:id', component: CausaComponent },
 ];

@@ -43,9 +43,8 @@ export class HistoricoCausasComponent implements OnInit {
         });
     }
 
-
     visualizarCausa(causa: Causa) {
-        this.route.navigate(['/causas/', causa.id]);
+        this.route.navigate(['/causa/', causa.id]);
     }
     
 }

@@ -17,7 +17,14 @@ export class ServiceGenerico {
     }
 
     get(api: string, path: string): Observable<any> {
-        return this.http.get(`${api}/${path}`);
+        let headers = new HttpHeaders();
+        headers = headers
+            .set("Content-Type", "application/json")
+            .set("Authorization", `Bearer ${this.jwtService.getToken()}`);
+
+        return this.http.get(`${api}/${path}`, {
+            headers: headers
+        });
     }
 
     put(data: any, id: number, api: string, path: string): Observable<any> {

@@ -9,6 +9,7 @@ import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 import { Usuario } from "../shared/usuarios/usuario.model";
 import { UsuarioService } from "../shared/usuarios/usuario.service";
+import { AutenticacaoService } from "../shared/auth/autenticacao.service";
 
 @Component({
     selector: 'causa',
@@ -30,19 +31,37 @@ export class CausaComponent implements OnInit {
     advogadoResponsavel: Usuario = new Usuario()
     cliente: Usuario = new Usuario()
 
-    constructor(private causaService: CausaService, private usuarioService: UsuarioService, private activatedRoute: ActivatedRoute, private route: Router) { }
+    constructor(private causaService: CausaService, private usuarioService: UsuarioService,
+         private autenticacaoService: AutenticacaoService, private activatedRoute: ActivatedRoute, 
+         private route: Router) {}
 
     ngOnInit(): void {
         const id = this.activatedRoute.snapshot.paramMap.get("id");
         if (id) {
             this.causaService.obterCausaPorId(+id).subscribe((causa) => {
                 this.causa = causa;
+
+                if (this.causa.idCliente) {
+                    this.usuarioService.obterUsuario(this.causa.idCliente).subscribe(usuario => {
+                        this.cliente = usuario;
+                    })
+                }
+
+                if (this.causa.idAdvogadoResponsavel) {
+                    this.usuarioService.obterUsuario(this.causa.idAdvogadoResponsavel).subscribe(usuario => {
+                        this.advogadoResponsavel = usuario;
+                    })
+                }
             });
         }
     }
 
     editar() {
         this.route.navigate(['causas/editar/', this.causa.id]);
+    }
+
+    usuarioEhCliente(): boolean {
+        return this.causa.idCliente === this.autenticacaoService.getUsuarioLogado()?.id;
     }
 
 }
