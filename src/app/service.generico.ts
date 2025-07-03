@@ -8,6 +8,7 @@ export class ServiceGenerico {
     constructor(private http: HttpClient, private jwtService: JWTService) { }
 
     post(data: any, api: string, path: string): Observable<any> {
+        console.log(this.jwtService.getToken())
         let headers = new HttpHeaders();
         headers = headers.set("Content-Type", "application/json").set("Authorization", `Bearer ${this.jwtService.getToken()}`)
         return this.http.post(`${api}/${path}`, JSON.stringify(data), {
@@ -19,5 +20,15 @@ export class ServiceGenerico {
         return this.http.get(`${api}/${path}`);
     }
 
+    put(data: any, id: number, api: string, path: string): Observable<any> {
+        let headers = new HttpHeaders();
+        headers = headers
+            .set("Content-Type", "application/json")
+            .set("Authorization", `Bearer ${this.jwtService.getToken()}`);
+
+        return this.http.put(`${api}/${path}/${id}`, JSON.stringify(data), {
+            headers: headers
+        });
+    }
 
 }

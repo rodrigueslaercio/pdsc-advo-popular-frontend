@@ -67,7 +67,7 @@ export class CadastroComponent implements OnInit {
                 horizontalPosition: 'center'
             });
 
-            await this.authService.logarAposCadastro(this.usuario);
+            this.authService.logarAposCadastro(this.usuario);
         } catch (err: any) {
             this.erroEndpoint = err.error || 'Erro desconhecido ao cadastrar';
             this.snackBar.open(this.erroEndpoint!, 'Fechar', {

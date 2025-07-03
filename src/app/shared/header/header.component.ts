@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     }
 
     registroCausaRedirect() {
-        this.route.navigate(['/cadastro-causa']);
+        this.route.navigate(['/causas/cadastrar']);
     }
 
 }

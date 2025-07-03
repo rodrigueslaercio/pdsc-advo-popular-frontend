@@ -72,7 +72,7 @@ export class AutenticacaoService {
                         this.usuarioService.obterUsuario(usuarioToken.id).subscribe({
                             next: (usuarioCadastrado) => {
                                 this.registrarUsuario(usuarioCadastrado);
-                                this.route.navigate(['/home-cliente']);
+                                this.route.navigate(['/home/cliente']);
                             },
                             error: (err) => {
                                 var erroEndpoint = err.error || 'Erro desconhecido ao logar após o cadastro';
@@ -95,5 +95,17 @@ export class AutenticacaoService {
                 });
             }
         });
+    }
+
+    checkTokenValidity() {
+        const token = localStorage.getItem('token')
+        if (this.jwtService.isTokenExpired()) {
+            this.logout();
+            this.snackBar.open('Sua sessão expirou. Por favor, faça login novamente.', 'Fechar', {
+                    duration: 5000,
+                    verticalPosition: 'bottom',
+                    horizontalPosition: 'center'
+            });
+        }
     }
 }

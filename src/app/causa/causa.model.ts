@@ -1,17 +1,17 @@
 export class Causa {
-    constructor() {}
-
-    titulo!: string;
-    descricao!: string;
-    idCliente!: number;
-    idAdvogadoResponsavel?: number;
-    statusCausa!: StatusCausa;
-    tipoCausa!: TipoCausa;
-    numeroProcesso!: string;
-    tribunal!: string;
-    valorCausa!: number; 
+  constructor(
+    public id?: number,
+    public titulo: string = '',
+    public descricao: string = '',
+    public idCliente?: number,
+    public statusCausa: StatusCausa = {} as StatusCausa,
+    public tipoCausa: TipoCausa = {} as TipoCausa,
+    public numeroProcesso: string = '',
+    public tribunal: string = '',
+    public valorCausa: number | null = null,
+    public idAdvogadoResponsavel?: number
+  ) {}
 }
-
 export enum StatusCausa {
     ABERTA = 'ABERTA',
     EM_ANDAMENTO = 'EM_ANDAMENTO',
@@ -21,6 +21,8 @@ export enum StatusCausa {
 
 export enum TipoCausa {
     CIVIL = 'CIVIL',
-    PENAL = 'PENAL',
-    TRABALHISTA = 'TRABALHISTA'
+    CRIMINAL = 'CRIMINAL',
+    TRABALHISTA = 'TRABALHISTA',
+    FAMILIA = 'FAMILIA',
+    OUTRO = 'OUTRO'
 }
