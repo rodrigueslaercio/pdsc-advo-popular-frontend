@@ -56,6 +56,7 @@ export class CadastroCausasComponent implements OnInit{
             console.log(this.causa.idCliente);
             this.causaService.atualizarCausa(this.causa, this.causa.id).subscribe({
                 next: (causaAtualizada) => {
+                    this.route.navigate(["/home/cliente"]);
                     this.snackBar.open('Causa atualizada com sucesso!', 'Fechar', {
                         duration: 5000,
                         verticalPosition: 'bottom',

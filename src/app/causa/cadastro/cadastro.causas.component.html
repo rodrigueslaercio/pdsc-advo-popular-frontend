@@ -7,7 +7,7 @@
                 <div class="form-field">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Título</mat-label>
-                        <input matInput placeholder="Digite o título" name="titulo" [(ngModel)]="causa.titulo"
+                        <input id="titulo-input" matInput placeholder="Digite o título" name="titulo" [(ngModel)]="causa.titulo"
                             #titulo="ngModel" required maxlength="100">
                         <mat-hint align="end">{{ causa.titulo.length || 0 }}/100</mat-hint>
                         <mat-error *ngIf="titulo.invalid && titulo.touched">
@@ -18,7 +18,7 @@
 
                 <mat-form-field appearance="fill" class="full-width">
                     <mat-label>Tipo da causa</mat-label>
-                    <mat-select [(ngModel)]="causa.tipoCausa" name="tipoCadastro" required>
+                    <mat-select id="tipo-select" [(ngModel)]="causa.tipoCausa" name="tipoCadastro" required>
                         <mat-option *ngFor="let tipo of tiposEnum" [value]="tipo">{{ tipo }}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -26,7 +26,7 @@
                 <div class="form-field">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Número do processo</mat-label>
-                        <input mask="0000000-00.0000.0.00.0000" matInput placeholder="Digite o número do processo"
+                        <input id="numero-input" mask="0000000-00.0000.0.00.0000" matInput placeholder="Digite o número do processo"
                             name="numeroProcesso" [(ngModel)]="causa.numeroProcesso" #numeroProcesso="ngModel" required
                             maxlength="25">
                         <mat-hint align="end">{{ causa.numeroProcesso.length || 0 }}/20</mat-hint>
@@ -39,7 +39,7 @@
                 <div class="form-field">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Tribunal</mat-label>
-                        <input matInput placeholder="Digite o Tribunal" name="tribunal" [(ngModel)]="causa.tribunal"
+                        <input id="tribunal-input" matInput placeholder="Digite o Tribunal" name="tribunal" [(ngModel)]="causa.tribunal"
                             required>
                     </mat-form-field>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="form-field">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Valor da causa</mat-label>
-                        <input matInput placeholder="Digite o valor da causa" name="valorCausa"
+                        <input id="valor-input" matInput placeholder="Digite o valor da causa" name="valorCausa"
                             [(ngModel)]="causa.valorCausa" #valorCausa="ngModel" reqired maxlength="9" [disabled]="valorNegociavel">
                         <mat-error *ngIf="valorCausa.invalid && valorCausa.touched">
                             <span *ngIf="valorCausa.errors?.['required']">Valor da causa é obrigatório.</span>
@@ -64,7 +64,7 @@
                 <div class="form-field">
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>Descrição</mat-label>
-                        <textarea matInput placeholder="Digite a descrição" name="descricao" [(ngModel)]="causa.descricao"
+                        <textarea id="descricao-area" matInput placeholder="Digite a descrição" name="descricao" [(ngModel)]="causa.descricao"
                             #descricao="ngModel" required maxlength="255"></textarea>
                         <mat-hint align="end">{{ causa.descricao.length || 0 }}/255</mat-hint>
                         <mat-error *ngIf="descricao.invalid && descricao.touched">
@@ -75,7 +75,7 @@
 
 
                 <div class="form-button">
-                    <button mat-raised-button color="primary" type="submit" (click)="salvar()">{{ causa.id ? 'Atualizar' : 'Registrar' }}</button>
+                    <button id="btn-salvar" mat-raised-button color="primary" type="submit" (click)="salvar()">{{ causa.id ? 'Atualizar' : 'Registrar' }}</button>
                 </div>
             </div>
         </div>

@@ -59,6 +59,9 @@ export class CadastroComponent implements OnInit {
 
     async cadastrar() {
         try {
+            if (this.usuario.tipoCadastro == 'advogado') {
+                this.usuario.oab = this.defineNumeroOab();
+            }
             await firstValueFrom(this.usuarioService.cadastrarUsuario(this.usuario));
 
             this.snackBar.open('Cadastrado com sucesso!', 'Fechar', {

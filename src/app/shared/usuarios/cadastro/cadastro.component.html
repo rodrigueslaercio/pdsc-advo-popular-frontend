@@ -6,7 +6,7 @@
 
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Tipo de Cadastro</mat-label>
-          <mat-select [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" (selectionChange)="onChangeTipoCadastro()" required>
+          <mat-select id="tipocadastro-select" [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" (selectionChange)="onChangeTipoCadastro()" required>
             <mat-option value="cliente">Cliente</mat-option>
             <mat-option value="advogado">Advogado</mat-option>
           </mat-select>
@@ -15,7 +15,7 @@
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Nome</mat-label>
-            <input matInput name="nome" [(ngModel)]="usuario.nome" #nome="ngModel" required maxlength="100">
+            <input id="nome-input" matInput name="nome" [(ngModel)]="usuario.nome" #nome="ngModel" required maxlength="100">
             <mat-hint align="end">{{ usuario.nome?.length || 0 }}/100</mat-hint>
             <mat-error *ngIf="nome.invalid && nome.touched">
               <span *ngIf="nome.errors?.['required']">Nome é obrigatório.</span>
@@ -33,7 +33,7 @@
         <div *ngIf="tipoDocumento === 'cpf' && usuario.tipoCadastro == 'cliente'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>CPF</mat-label>
-            <input matInput mask="000.000.000-00" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" required>
+            <input id="cpf-input" matInput mask="000.000.000-00" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" required>
              <mat-hint align="end">{{ usuario.cpf?.length || 0 }}/14</mat-hint>
             <mat-error *ngIf="cpf.invalid && cpf.touched">
               <span *ngIf="cpf.errors?.['required']">CPF é obrigatório</span>
@@ -44,7 +44,7 @@
          <div *ngIf="tipoDocumento === 'cnpj' && usuario.tipoCadastro == 'cliente'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>CNPJ</mat-label>
-            <input matInput mask="00.000.000/0000-00" name="cnpj" [(ngModel)]="usuario.cnpj" #cnpj="ngModel" required>
+            <input id="cnpj-input" matInput mask="00.000.000/0000-00" name="cnpj" [(ngModel)]="usuario.cnpj" #cnpj="ngModel" required>
              <mat-hint align="end">{{ usuario.cnpj?.length || 0 }}/18</mat-hint>
             <mat-error *ngIf="cnpj.invalid && cnpj.touched">
               <span *ngIf="cnpj.errors?.['required']">CNPJ é obrigatório</span>
@@ -56,7 +56,7 @@
         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>OAB</mat-label>
-            <input matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" #oab="ngModel" required (keypress)="onlyNumbers($event)" maxlength="6">
+            <input id="oab-input" matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" #oab="ngModel" required (keypress)="onlyNumbers($event)" maxlength="6">
             <mat-error *ngIf="oab.invalid && oab.touched">
               <span *ngIf="oab.errors?.['pattern']">OAB deve ser válido</span>
             </mat-error>
@@ -66,7 +66,7 @@
         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Estado</mat-label>
-          <mat-select [(ngModel)]="usuario.estado" name="estado" required>
+          <mat-select id="estado-select" [(ngModel)]="usuario.estado" name="estado" required>
             <mat-option *ngFor="let estado of estados" [value]="estado.nome"> {{estado.nome}} </mat-option>
           </mat-select>
         </mat-form-field>
@@ -83,7 +83,7 @@
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Email</mat-label>
-            <input type="email" matInput placeholder="Digite seu email" name="email" [(ngModel)]="usuario.email"
+            <input id="email-input" type="email" matInput placeholder="Digite seu email" name="email" [(ngModel)]="usuario.email"
               #email="ngModel" required email maxlength="100">
             <mat-hint align="end">{{ usuario.email?.length || 0 }}/100</mat-hint>
             <mat-error *ngIf="email.invalid && email.touched">
@@ -95,7 +95,7 @@
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Senha</mat-label>
-            <input matInput type="password" placeholder="Digite sua senha" name="senha" [(ngModel)]="usuario.senha"
+            <input id="senha-input" matInput type="password" placeholder="Digite sua senha" name="senha" [(ngModel)]="usuario.senha"
               required #senha="ngModel" pattern="^(?=.*[A-Z])(?=.*\d).{8,36}$" maxlength="36" minlength="8">
             <mat-hint align="end">{{ usuario.senha?.length || 0 }}/36</mat-hint>
             <mat-error *ngIf="senha.invalid && senha.touched">
@@ -110,7 +110,7 @@
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Confirme sua senha</mat-label>
-            <input matInput type="password" placeholder="Confirme sua senha" name="confirmacao"
+            <input id="confirmacao-input" matInput type="password" placeholder="Confirme sua senha" name="confirmacao"
               [(ngModel)]="usuario.confirmacaoSenha" #confirmacao="ngModel" (input)="erroEndpoint" required 
               pattern="^(?=.*[A-Z])(?=.*\d).{8,36}$" maxlength="36" minlength="8">
                <mat-hint align="end">{{ usuario.confirmacaoSenha?.length || 0 }}/36</mat-hint>
