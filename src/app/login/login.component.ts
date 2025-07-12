@@ -51,7 +51,11 @@ export class LoginComponent implements OnInit {
                 if (usuario && usuario.id !== undefined) {
                     this.usuarioService.obterUsuario(usuario.id).subscribe(usuarioLogado => {
                         this.authService.registrarUsuario(usuarioLogado);
-                        this.route.navigate(['/home/cliente']);
+                        if (usuarioLogado.tipoCadastro == 'cliente') {
+                            this.route.navigate(['/home/cliente']);
+                        } else {
+                            this.route.navigate(['/home/advogado'])
+                        }
                     });
                 }
             }

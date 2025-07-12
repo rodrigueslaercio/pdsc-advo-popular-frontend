@@ -1,15 +1,15 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { CausaService } from "../causa.service";
-import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { Causa } from "../causa.model";
 import { MatCardModule } from "@angular/material/card";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { CausaService } from "../causa.service";
 import { AutenticacaoService } from "../../shared/auth/autenticacao.service";
 import { Router } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import { Causa } from "../causa.model";
 
 @Component({
-    selector: 'home-cliente',
-    templateUrl: 'historico.causas.component.html',
+    selector: 'home-advogado',
+    templateUrl: 'painel.causas.component.html',
     imports: [
         MatCardModule,
         MatTableModule,
@@ -19,24 +19,14 @@ import { CommonModule } from "@angular/common";
         CausaService
     ]
 })
-export class HistoricoCausasComponent implements OnInit {
+export class PainelCausasComponent implements OnInit {
     dataSource!: MatTableDataSource<Causa>;
     displayedColumns: string[] = ['titulo', 'descricao', 'statusCausa', 'tipoCausa'];
 
     constructor(private causaService: CausaService, public autenticacaoService: AutenticacaoService, private route : Router) {}
 
     ngOnInit(): void {
-        this.listarCausaCliente();
-    }
-
-    listarCausaCliente() {
-        var idUsuario = this.autenticacaoService.getUsuarioLogado()?.id;
-
-        if (idUsuario !== undefined) {
-            this.causaService.obterByClienteId(idUsuario).subscribe((causas: Causa[]) => {
-                this.dataSource = new MatTableDataSource(causas);
-            });
-        }
+        this.listarCausas();
     }
 
     listarCausas() {
@@ -44,9 +34,4 @@ export class HistoricoCausasComponent implements OnInit {
             this.dataSource = new MatTableDataSource(causas);
         });
     }
-
-    visualizarCausa(causa: Causa) {
-        this.route.navigate(['/causa/', causa.id]);
-    }
-    
 }

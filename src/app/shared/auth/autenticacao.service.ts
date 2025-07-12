@@ -13,7 +13,7 @@ import { UsuarioService } from "../usuarios/usuario.service";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AutenticacaoService {
 
     usuario: Usuario | null = null;
@@ -73,7 +73,11 @@ export class AutenticacaoService {
                         this.usuarioService.obterUsuario(usuarioToken.id).subscribe({
                             next: (usuarioCadastrado) => {
                                 this.registrarUsuario(usuarioCadastrado);
-                                this.route.navigate(['/home/cliente']);
+                                if (usuarioCadastrado.tipoCadastro == 'cliente') {
+                                    this.route.navigate(['/home/cliente']);
+                                } else {
+                                    this.route.navigate(['/home/advogado']);
+                                }
                             },
                             error: (err) => {
                                 var erroEndpoint = err.error || 'Erro desconhecido ao logar após o cadastro';
