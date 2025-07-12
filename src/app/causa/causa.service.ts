@@ -19,4 +19,12 @@ export class CausaService {
     public cadastrarCausas(causa: Causa): Observable<Causa> {
         return this.serviceGenerico.post(causa, `${environment.API}/causa`, 'cadastrar');
     }
+
+    public atualizarCausa(causa: Causa, id: number): Observable<Causa> {
+        return this.serviceGenerico.put(causa, id, `${environment.API}`, `causa/editar`);
+    }
+
+    public obterCausaPorId(id: number) {
+        return this.serviceGenerico.get(`${environment.API}`, `causa/${id}`);
+    }
 }

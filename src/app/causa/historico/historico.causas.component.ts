@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { CausaService } from "./causa.service";
+import { CausaService } from "../causa.service";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { Causa } from "./causa.model";
+import { Causa } from "../causa.model";
 import { MatCardModule } from "@angular/material/card";
-import { AutenticacaoService } from "../shared/auth/autenticacao.service";
+import { AutenticacaoService } from "../../shared/auth/autenticacao.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'home-cliente',
@@ -20,7 +21,7 @@ export class HistoricoCausasComponent implements OnInit {
     dataSource!: MatTableDataSource<Causa>;
     displayedColumns: string[] = ['titulo', 'descricao', 'statusCausa', 'tipoCausa'];
 
-    constructor(private causaService: CausaService, private autenticacaoService: AutenticacaoService) {}
+    constructor(private causaService: CausaService, private autenticacaoService: AutenticacaoService, private route : Router) {}
 
     ngOnInit(): void {
         this.listarCausaCliente();
@@ -42,5 +43,8 @@ export class HistoricoCausasComponent implements OnInit {
         });
     }
 
+    visualizarCausa(causa: Causa) {
+        this.route.navigate(['/causa/', causa.id]);
+    }
     
 }

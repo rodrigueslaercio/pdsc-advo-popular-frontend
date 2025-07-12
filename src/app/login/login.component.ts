@@ -13,6 +13,7 @@ import { JWTService } from "../shared/auth/jwt.service";
 import { Usuario } from "../shared/usuarios/usuario.model";
 import { UsuarioService } from "../shared/usuarios/usuario.service";
 import { Router, RouterModule } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
     selector: 'login',
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
     constructor(private authService: AutenticacaoService, 
         private jwtService: JWTService,
          private usuarioService: UsuarioService, 
-        private route: Router) {
+        private route: Router, private snackBar: MatSnackBar) {
         this.autenticacao = new Autenticacao();
     }
 
@@ -50,13 +51,19 @@ export class LoginComponent implements OnInit {
                 if (usuario && usuario.id !== undefined) {
                     this.usuarioService.obterUsuario(usuario.id).subscribe(usuarioLogado => {
                         this.authService.registrarUsuario(usuarioLogado);
-                        this.route.navigate(['/home-cliente']);
+                        this.route.navigate(['/home/cliente']);
                     });
-                } else {
-                    console.error('Ocorreu um erro ao logar.');
                 }
             }
-        })
+        }, (err) => {
+            var erroEndpoint = err.error || 'Erro desconhecido ao logar.'
+            this.snackBar.open(erroEndpoint, 'Fechar', {
+                duration: 5000,
+                verticalPosition: 'bottom',
+                horizontalPosition: 'center'
+            })
+        }
+        )
     }
 
     redirecionarPaginaCadastro() {

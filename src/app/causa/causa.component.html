@@ -1,0 +1,53 @@
+<mat-card class="cadastro-card">
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12">
+            <div class="titulo text-center">Visualização da causa</div>
+
+            <div class="form-field">
+                <strong>Título:</strong>
+                <div>{{ causa.titulo }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Cliente</strong>
+                <div>{{ cliente.nome }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Advogado responsável:</strong>
+                <div>{{ advogadoResponsavel.id != null ? advogadoResponsavel.nome : 'Não definido' }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Tipo da causa:</strong>
+                <div>{{ causa.tipoCausa }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Número do processo:</strong>
+                <div>{{ causa.numeroProcesso }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Tribunal:</strong>
+                <div>{{ causa.tribunal }}</div>
+            </div>
+
+            <div class="form-field">
+                <strong>Valor da causa:</strong>
+                <div>
+                    {{ causa.valorCausa !== null ? ('R$ ' + (causa.valorCausa | number: '1.2-2')) : 'A negociar' }}
+                </div>
+            </div>
+
+            <div class="form-field">
+                <strong>Descrição:</strong>
+                <div>{{ causa.descricao }}</div>
+            </div>
+
+            <div *ngIf="usuarioEhCliente()" class="form-button text-center mt-3">
+                <button id="btn-editar" mat-raised-button color="primary" (click)="editar()">Editar</button>
+            </div>
+        </div>
+    </div>
+</mat-card>

@@ -3,7 +3,8 @@ export class Usuario {
 
     id?: number;
     nome?: string;
-    cpf_cnpj?: string;
+    cpf?: string;
+    cnpj?: string;
     oab?: string;
     estado?: string;
     email?: string;

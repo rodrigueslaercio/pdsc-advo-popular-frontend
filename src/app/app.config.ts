@@ -8,6 +8,7 @@ import { JWTService } from './shared/auth/jwt.service';
 import { UsuarioService } from './shared/usuarios/usuario.service';
 import { ServiceGenerico } from './service.generico';
 import { AuthGuard } from './shared/auth/auth.guard.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     UsuarioService,
     ServiceGenerico,
     AuthGuard,
+    MatSnackBarModule,
   ]
 };

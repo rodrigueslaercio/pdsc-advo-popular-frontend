@@ -1,68 +1,130 @@
 <mat-card class="cadastro-card">
-  <form #formLogin="ngForm" novalidate>
+  <form #formLogin="ngForm" (ngSubmit)="cadastrar()" novalidate>
     <div class="row justify-content-center">
       <div class="col-lg-3 col-md-5 col-sm-10 col-xs-12">
         <div class="logo text-center">Cadastre-se</div>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Tipo de Cadastro</mat-label>
-      <mat-select [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" required>
-        <mat-option value="cliente">Cliente</mat-option>
-        <mat-option value="advogado">Advogado</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Tipo de Cadastro</mat-label>
+          <mat-select id="tipocadastro-select" [(ngModel)]="usuario.tipoCadastro" name="tipoCadastro" (selectionChange)="onChangeTipoCadastro()" required>
+            <mat-option value="cliente">Cliente</mat-option>
+            <mat-option value="advogado">Advogado</mat-option>
+          </mat-select>
+        </mat-form-field>
 
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Nome</mat-label>
-            <input matInput placeholder="Digite seu nome" name="nome" [(ngModel)]="usuario.nome" required>
+            <input id="nome-input" matInput name="nome" [(ngModel)]="usuario.nome" #nome="ngModel" required maxlength="100">
+            <mat-hint align="end">{{ usuario.nome?.length || 0 }}/100</mat-hint>
+            <mat-error *ngIf="nome.invalid && nome.touched">
+              <span *ngIf="nome.errors?.['required']">Nome é obrigatório.</span>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div *ngIf="usuario.tipoCadastro == 'cliente'" class="form-field">
+          <mat-radio-group [(ngModel)]="tipoDocumento" (change)="onChangeTipoDocumento()" name="tipoDocumento">
+            <mat-radio-button value="cpf">CPF</mat-radio-button>
+            <mat-radio-button value="cnpj">CNPJ</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div *ngIf="tipoDocumento === 'cpf' && usuario.tipoCadastro == 'cliente'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
-            <mat-label>CPF/CNPJ</mat-label>
-            <input matInput placeholder="Digite seu CPF ou CNPJ" name="cpf_cnpj" [(ngModel)]="usuario.cpf_cnpj" required>
+            <mat-label>CPF</mat-label>
+            <input id="cpf-input" matInput mask="000.000.000-00" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" required>
+             <mat-hint align="end">{{ usuario.cpf?.length || 0 }}/14</mat-hint>
+            <mat-error *ngIf="cpf.invalid && cpf.touched">
+              <span *ngIf="cpf.errors?.['required']">CPF é obrigatório</span>
+            </mat-error>
           </mat-form-field>
         </div>
+
+         <div *ngIf="tipoDocumento === 'cnpj' && usuario.tipoCadastro == 'cliente'" class="form-field">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>CNPJ</mat-label>
+            <input id="cnpj-input" matInput mask="00.000.000/0000-00" name="cnpj" [(ngModel)]="usuario.cnpj" #cnpj="ngModel" required>
+             <mat-hint align="end">{{ usuario.cnpj?.length || 0 }}/18</mat-hint>
+            <mat-error *ngIf="cnpj.invalid && cnpj.touched">
+              <span *ngIf="cnpj.errors?.['required']">CNPJ é obrigatório</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
 
         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>OAB</mat-label>
-            <input matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" required>
+            <input id="oab-input" matInput placeholder="Digite seu N° da OAB" name="oab" [(ngModel)]="usuario.oab" #oab="ngModel" required (keypress)="onlyNumbers($event)" maxlength="6">
+            <mat-error *ngIf="oab.invalid && oab.touched">
+              <span *ngIf="oab.errors?.['pattern']">OAB deve ser válido</span>
+            </mat-error>
           </mat-form-field>
         </div>
 
-         <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
+        <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Estado</mat-label>
+          <mat-select id="estado-select" [(ngModel)]="usuario.estado" name="estado" required>
+            <mat-option *ngFor="let estado of estados" [value]="estado.nome"> {{estado.nome}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+
+        <!-- <div *ngIf="usuario.tipoCadastro == 'advogado'" class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Estado Conselho</mat-label>
-            <input matInput placeholder="Digite o Estado do conselho" name="estado" [(ngModel)]="usuario.estado" required>
+            <input matInput placeholder="Digite o Estado do conselho" name="estado" [(ngModel)]="usuario.estado"
+              required>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="Digite seu email" name="email" [(ngModel)]="usuario.email" required>
+            <input id="email-input" type="email" matInput placeholder="Digite seu email" name="email" [(ngModel)]="usuario.email"
+              #email="ngModel" required email maxlength="100">
+            <mat-hint align="end">{{ usuario.email?.length || 0 }}/100</mat-hint>
+            <mat-error *ngIf="email.invalid && email.touched">
+              <span *ngIf="email.errors?.['required']">Email é obrigatório.</span>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Senha</mat-label>
-            <input matInput type="password" placeholder="Digite sua senha" name="senha" [(ngModel)]="usuario.senha" required>
-          </mat-form-field>
+            <input id="senha-input" matInput type="password" placeholder="Digite sua senha" name="senha" [(ngModel)]="usuario.senha"
+              required #senha="ngModel" pattern="^(?=.*[A-Z])(?=.*\d).{8,36}$" maxlength="36" minlength="8">
+            <mat-hint align="end">{{ usuario.senha?.length || 0 }}/36</mat-hint>
+            <mat-error *ngIf="senha.invalid && senha.touched">
+              <span *ngIf="senha.errors?.['required']">Senha é obrigatória.</span>
+              <span *ngIf="senha.errors?.['pattern']">
+                A senha deve conter entre 8 e 36 caracteres e ao menos uma letra maiúscula e um número.
+              </span>
+            </mat-error>
+          </mat-form-field> 
         </div>
 
         <div class="form-field">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Confirme sua senha</mat-label>
-            <input matInput type="password" placeholder="Confirme sua senha" name="confirmacao" [(ngModel)]="usuario.confirmacaoSenha" required>
+            <input id="confirmacao-input" matInput type="password" placeholder="Confirme sua senha" name="confirmacao"
+              [(ngModel)]="usuario.confirmacaoSenha" #confirmacao="ngModel" (input)="erroEndpoint" required 
+              pattern="^(?=.*[A-Z])(?=.*\d).{8,36}$" maxlength="36" minlength="8">
+               <mat-hint align="end">{{ usuario.confirmacaoSenha?.length || 0 }}/36</mat-hint>
+            <mat-error *ngIf="formLogin.submitted">
+               <span *ngIf="confirmacao.errors?.['required']">Confirmação é obrigatório.</span>
+                <span *ngIf="confirmacao.errors?.['pattern']">
+                A senha deve conter entre 8 e 36 caracteres e ao menos uma letra maiúscula e um número.
+              </span>
+            </mat-error>
           </mat-form-field>
         </div>
 
         <div class="form-button">
-          <button mat-raised-button color="primary" type="submit" (click)="cadastrar()">Cadastrar</button>
+          <button mat-raised-button color="primary" type="submit">Cadastrar</button>
         </div>
       </div>
     </div>
